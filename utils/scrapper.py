@@ -2,6 +2,7 @@
 import traceback
 from bs4 import BeautifulSoup
 import requests
+import datetime
 
 AZKEN_BERRIAK_URL = "https://www.berria.eus"
 IRAKURRIENAK_URL = "https://www.berria.eus/irakurriena/"
@@ -15,6 +16,8 @@ KIROLA_URL = "https://www.berria.eus/kirola/"
 BIZIGIRO_URL = "https://www.berria.eus/bizigiro/"
 
 topics = ["Azken berriak", "Berri irakurrienak", "Gizartea", "Politika", "Ekonomia", "Mundua", "Iritzia", "Kultura", "Kirola", "Bizigiro"]
+
+
 
 def get_file_url(option):
 
@@ -93,10 +96,14 @@ def get_articles(url, main_articles = False):
         single_article = {}
         
         l = elem.find('a')
-        text = "\"" + l.text + "\" artikulua"
-        
+        #text = "\"" + l.text + "\" artikulua"
+        text = l.text
+        url = l.get('href')
+        content = get_sub_header(url)
+
         single_article['header'] = text
-        single_article['url'] = l.get('href')
+        single_article['url'] = url
+        single_article['content'] = content
         
         articles.append(single_article)
 
@@ -125,11 +132,6 @@ def get_all_articles():
         topic = topics[i]
         url = get_file_url(topic)
         articles = get_articles(url, main_articles)
-
-        if i == 0:
-            print(articles)
-            print()
-
         global_articles[topic] = articles
 
     return global_articles
@@ -147,7 +149,6 @@ def get_sub_header(url):
     Returns:
         Subheader of the article
     '''
-
     html_file = requests.get(url).text
     soup = BeautifulSoup(html_file, "html.parser")
 
@@ -187,7 +188,10 @@ if __name__ == "__main__":
         url = "https://www.berria.eus/"
         output_file = "index.html"
         file = "index-politika.html"
+        start = datetime.datetime.now()
         print(get_all_articles())
+        end = datetime.datetime.now()
+        print("Execution time: " + str(end - start))
 
     except Exception as e:
         print(traceback.format_exc())
