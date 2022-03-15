@@ -1,5 +1,21 @@
 version: "3.0"
 
+entities:
+  - article
+
+slots:
+  article:
+    type: text
+    initial_value: ""
+    mappings:
+      - type: from_entity
+        entity: article
+
+  article_keeper:
+    type: any
+    mappings:
+      - type: custom
+
 intents:
   - greet
   - goodbye
