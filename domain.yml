@@ -19,11 +19,8 @@ slots:
 intents:
   - greet
   - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - choose_news_with_keywords
+  - more_information
 
 responses:
   utter_greet:
