@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 import requests
 import datetime
 
+from ixapipes.tok import IxaPipesTokenizer
+from ixapipes.pos import IxaPipesPosTagger
+
 AZKEN_BERRIAK_URL = "https://www.berria.eus"
 IRAKURRIENAK_URL = "https://www.berria.eus/irakurriena/"
 GIZARTEA_URL = "https://www.berria.eus/gizartea/"
@@ -17,6 +20,8 @@ BIZIGIRO_URL = "https://www.berria.eus/bizigiro/"
 
 topics = ["Azken berriak", "Berri irakurrienak", "Gizartea", "Politika", "Ekonomia", "Mundua", "Iritzia", "Kultura", "Kirola", "Bizigiro"]
 
+tokenizer = IxaPipesTokenizer('eu')
+lemmatizer = IxaPipesPosTagger('eu', 'morph-models-1.5.0/eu/eu-pos-perceptron-epec.bin','morph-models-1.5.0/eu/eu-lemma-perceptron-epec.bin')
 
 
 def get_file_url(option):
@@ -64,6 +69,12 @@ def get_file_url(option):
     else:
         return None
 
+def preprocess_header(header):
+    tokens = tokenizer(header)
+    lemmas = lemmatizer(tokens)
+    final_lemmas = get_lemmatized_text(lemmas)
+    return final_lemmas
+
 def get_articles(url, main_articles = False):
     '''
     Given an html file, gets all the main headers and the links to the articles by using scrapping. 
@@ -83,9 +94,7 @@ def get_articles(url, main_articles = False):
 
     # If chosen topic main_articles, special html structure must be taken into account
     if main_articles:
-        #links = soup.find(id='bereziak').find_all('h3', class_='article-titu')
         links = soup.find(id='nagusiak').find_all(['h2','h3','h4'], class_='article-titu')
-        #links.extend(links2)
 
     else:
         links = soup.find_all(['h2', 'h3', 'h4'], class_='article-titu')
@@ -96,12 +105,12 @@ def get_articles(url, main_articles = False):
         single_article = {}
         
         l = elem.find('a')
-        #text = "\"" + l.text + "\" artikulua"
         text = l.text
         url = l.get('href')
         content = get_sub_header(url)
 
-        single_article['header'] = text
+        single_article['header'] = preprocess_header(text)
+        single_article['original_header'] = text
         single_article['url'] = url
         single_article['content'] = content
         
@@ -119,6 +128,7 @@ def get_all_articles():
     '''
 
     global_articles = {}
+    all_articles = []
     main_articles = False
 
     for i in range(len(topics)):
@@ -129,10 +139,16 @@ def get_all_articles():
         else:
             main_articles = False
 
+        
         topic = topics[i]
         url = get_file_url(topic)
         articles = get_articles(url, main_articles)
         global_articles[topic] = articles
+
+        if i > 1:
+            all_articles += articles
+
+    global_articles['all_articles'] = all_articles
 
     return global_articles
 
