@@ -24,23 +24,15 @@ intents:
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
+  - text: "Kaixo! Ni Juliet chatbot-a naiz."
 
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
+  utter_explain:
+  - text: "Berria egunkariko artikuluak modu errazago batean bilatzeko programatu naute. Bilaketak ondo egiteko, bilatu nahi duzun titularraren hitz gakoak \" en artean jarri, mesedez."
 
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+  utter_error_msg:
+  - text: "Barkatu, ez zaitut ulertu. Berriz errepikatuko?"
+  - text: "Ez dakit zer den eskatzen ari zarena. Mesedez, beste modu batera probatu."
+  - text: "Ez dut ulertu eskatutakoa. Agian beste modu batean esanez gero ulertuko zaitut."
 
 session_config:
   session_expiration_time: 60
