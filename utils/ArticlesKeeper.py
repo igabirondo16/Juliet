@@ -5,8 +5,14 @@ class ArticlesKeeper(object):
     
     def __init__(self):
         self.article = None
-    
 
+
+    def set_article(self, article):
+        self.article = article
+
+    def get_article(self):
+        return self.article
+    
     def get_articles_by_category(self, category):
         qs = QuerySearcher()
         news = qs.get_news_by_category(category)
@@ -17,7 +23,6 @@ class ArticlesKeeper(object):
             output_msg += str(index) + ") " + header + "\n"
             index += 1
 
-
         return output_msg
 
     def get_article_content_from_category(self, category, user_query):
@@ -27,6 +32,7 @@ class ArticlesKeeper(object):
         if result == None:
             return None
 
+        self.set_article(result)
         return result['content']
 
     def get_article_content_from_all_news(self, user_query):
