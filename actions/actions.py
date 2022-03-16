@@ -25,3 +25,71 @@
 #         dispatcher.utter_message(text="Hello World!")
 #
 #         return []
+
+from typing import Any, Text, Dict, List
+
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet
+from utils.ArticlesKeeper import ArticlesKeeper
+
+
+class ActionInitializeArticleKeeper(Action):
+
+    def name(self) -> Text:
+        return "action_return_article_content"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        ak = ArticlesKeeper()
+
+        return [SlotSet('article_keeper', ak)]
+
+
+
+class ActionReturnArticleContent(Action):
+
+    def name(self) -> Text:
+        return "action_return_article_content"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        ak = tracker.get_slot('article_keeper')
+        user_query = tracker.get_slot('article')
+
+        result = ak.get_article_content_from_all_news(user_query)
+
+        if result == None:
+            dispatcher.utter_message(response='utter_error_msg')
+
+        else:
+            dispatcher.utter_message(response=result)
+
+        return [SlotSet('article_keeper', ak)]
+
+
+class ActionReturnArticleUrl(Action):
+
+    def name(self) -> Text:
+        return "action_return_article_url"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        ak = tracker.get_slot('article_keeper')
+
+        result = ak.get_article()
+
+        if result == None:
+            dispatcher.utter_message(response='utter_error_msg')
+
+        else:
+            url = result['url']
+            dispatcher.utter_message(response=url)
+
+        return [SlotSet('article_keeper', ak)]
