@@ -2,29 +2,13 @@ version: "3.0"
 
 stories:
 
-- story: happy path
+- story: get the content of an article searching against all the articles from the newspaper
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
-
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+    - intent: greet
+    - action: action_return_article_content
+    - action: utter_greet
+    - action: utter_explain
+    - intent: choose_article_with_keywords
+    - action: action_return_article_content
+    - intent: more_information
+    - action: action_return_article_url

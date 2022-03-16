@@ -25,7 +25,7 @@ nlu:
     - Agur 
     - Aio
 
-- intent: choose_news_with_keywords
+- intent: choose_article_with_keywords
   examples: |
     - "[Gorriz markatutako eguna]{"entity":"article"}" artikulua eman
     - "[Hutsik dago Olarizu]{"entity":"article"}" artikuluari buruz interesa daukat 

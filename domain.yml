@@ -19,8 +19,13 @@ slots:
 intents:
   - greet
   - goodbye
-  - choose_news_with_keywords
+  - choose_article_with_keywords
   - more_information
+
+actions:
+  - action_return_article_content
+  - action_return_article_content
+  - action_return_article_url
 
 responses:
   utter_greet:
@@ -36,4 +41,4 @@ responses:
 
 session_config:
   session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  carry_over_slots_to_new_session: false
