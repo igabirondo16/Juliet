@@ -44,6 +44,8 @@ nlu:
 
 - intent: more_information
   examples: |
+    - Esteka eman
+    - Artikuluaren esteka eman
     - Informazio gehiago eman
     - Gehiago jakin nahi dut
     - Gehiago kontatu

@@ -5,7 +5,7 @@ stories:
 - story: get the content of an article searching against all the articles from the newspaper
   steps:
     - intent: greet
-    - action: action_return_article_content
+    - action: action_initialize_article_keeper
     - action: utter_greet
     - action: utter_explain
     - intent: choose_article_with_keywords

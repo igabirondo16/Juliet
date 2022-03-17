@@ -1,5 +1,12 @@
 version: "3.0"
 
+intents:
+  - greet
+  - goodbye
+  - choose_article_with_keywords
+  - more_information
+
+
 entities:
   - article
 
@@ -16,17 +23,6 @@ slots:
     mappings:
       - type: custom
 
-intents:
-  - greet
-  - goodbye
-  - choose_article_with_keywords
-  - more_information
-
-actions:
-  - action_return_article_content
-  - action_return_article_content
-  - action_return_article_url
-
 responses:
   utter_greet:
   - text: "Kaixo! Ni Juliet chatbot-a naiz."
@@ -38,6 +34,12 @@ responses:
   - text: "Barkatu, ez zaitut ulertu. Berriz errepikatuko?"
   - text: "Ez dakit zer den eskatzen ari zarena. Mesedez, beste modu batera probatu."
   - text: "Ez dut ulertu eskatutakoa. Agian beste modu batean esanez gero ulertuko zaitut."
+
+
+actions:
+  - action_initialize_article_keeper
+  - action_return_article_content
+  - action_return_article_url
 
 session_config:
   session_expiration_time: 60

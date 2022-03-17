@@ -37,15 +37,15 @@ from utils.ArticlesKeeper import ArticlesKeeper
 class ActionInitializeArticleKeeper(Action):
 
     def name(self) -> Text:
-        return "action_return_article_content"
+        return "action_initialize_article_keeper"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        ak = ArticlesKeeper()
+        ak_json = ArticlesKeeper().to_json()
 
-        return [SlotSet('article_keeper', ak)]
+        return [SlotSet('article_keeper', ak_json)]
 
 
 
@@ -58,7 +58,8 @@ class ActionReturnArticleContent(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        ak = tracker.get_slot('article_keeper')
+        ak_json = tracker.get_slot('article_keeper')
+        ak = ArticlesKeeper(ak_json)
         user_query = tracker.get_slot('article')
 
         result = ak.get_article_content_from_all_news(user_query)
@@ -67,9 +68,10 @@ class ActionReturnArticleContent(Action):
             dispatcher.utter_message(response='utter_error_msg')
 
         else:
-            dispatcher.utter_message(response=result)
+            dispatcher.utter_message(text=result)
 
-        return [SlotSet('article_keeper', ak)]
+        ak_json = ak.to_json()
+        return [SlotSet('article_keeper', ak_json)]
 
 
 class ActionReturnArticleUrl(Action):
@@ -81,7 +83,8 @@ class ActionReturnArticleUrl(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        ak = tracker.get_slot('article_keeper')
+        ak_json = tracker.get_slot('article_keeper')
+        ak = ArticlesKeeper(ak_json)
 
         result = ak.get_article()
 
@@ -90,6 +93,7 @@ class ActionReturnArticleUrl(Action):
 
         else:
             url = result['url']
-            dispatcher.utter_message(response=url)
+            dispatcher.utter_message(text=url)
 
-        return [SlotSet('article_keeper', ak)]
+        ak_json = ak.to_json()
+        return [SlotSet('article_keeper', ak_json)]

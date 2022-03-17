@@ -6,9 +6,7 @@ from whoosh import scoring
 from ixapipes.tok import IxaPipesTokenizer
 from ixapipes.pos import IxaPipesPosTagger
 
-from scrapper import get_lemmatized_text
-
-import os.path
+from utils.scrapper import get_lemmatized_text
 
 class QuerySearcher:
 
@@ -36,6 +34,7 @@ class QuerySearcher:
             else:
                 article = {}
                 article['header'] = results[0].get('header')
+                article['original_header'] = results[0].get('original_header')
                 article['url'] = results[0].get('url')
                 article['content'] = results[0].get('content')
 
@@ -43,6 +42,7 @@ class QuerySearcher:
     
 
     def __preprocess_user_query(self, header):
+        header = header.replace('"', '')
 
         if self.tokenizer == None:    
             self.tokenizer = IxaPipesTokenizer('eu')

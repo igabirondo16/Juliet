@@ -1,11 +1,20 @@
-from QuerySearcher import QuerySearcher
+from utils.QuerySearcher import QuerySearcher
+import json
 
 class ArticlesKeeper(object):
-    
-    
-    def __init__(self):
-        self.article = None
 
+    def __init__(self, json_file = {}):
+
+        if json_file == {}:
+            self.article = {}
+
+        else:
+            json_data = json.loads(json_file)
+            self.article = json_data['article']
+
+    def to_json(self):
+         return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)
 
     def set_article(self, article):
         self.article = article
@@ -28,6 +37,7 @@ class ArticlesKeeper(object):
     def get_article_content_from_category(self, category, user_query):
         qs = QuerySearcher()
         result = qs.search_article(category, user_query)
+        print("RESULT: " + str(result))
 
         if result == None:
             return None
