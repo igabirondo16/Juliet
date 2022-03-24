@@ -81,4 +81,7 @@ def main():
 
 if __name__ == "__main__":
     #main()
+    start = time.time()
     update_index_articles()
+    end = time.time()
+    print("Time of indexing articles: " + str(end - start))

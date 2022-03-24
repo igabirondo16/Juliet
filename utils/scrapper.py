@@ -1,4 +1,5 @@
 
+from re import sub
 import traceback
 from bs4 import BeautifulSoup
 import requests
@@ -107,12 +108,19 @@ def get_articles(url, main_articles = False):
         l = elem.find('a')
         text = l.text
         url = l.get('href')
-        content = get_sub_header(url)
+        sub_header, first_paragraph = get_sub_header(url)
 
-        single_article['header'] = preprocess_header(text)
+        text_to_lemmatize = text + " " +  sub_header + " " + first_paragraph
+
+        single_article['header'] = preprocess_header(text_to_lemmatize)
         single_article['original_header'] = text
         single_article['url'] = url
-        single_article['content'] = content
+
+        if sub_header:
+            single_article['content'] = sub_header
+
+        else:
+            single_article['content'] = first_paragraph
         
         articles.append(single_article)
 
@@ -165,16 +173,19 @@ def get_sub_header(url):
     Returns:
         Subheader of the article
     '''
+    if url.startswith('/'):
+        url = 'https://berria.eus' + url
+    
+
     html_file = requests.get(url).text
     soup = BeautifulSoup(html_file, "html.parser")
 
     sub_header = soup.find(id = 'albistea_titu').find_all('div', class_="article-sarrera")[0].text
     
-    # In case div label is empty, return first paragraph of the article as subheader
-    if not sub_header:
-        sub_header = soup.find('div', class_="article-testua").find('p').text
+    # Extract the first paragraph of the artciel
+    first_paragraph = soup.find('div', class_="article-testua").find('p').text
 
-    return sub_header
+    return sub_header, first_paragraph
 
 def get_lemmatized_text(naf_text):
     '''
