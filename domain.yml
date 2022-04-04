@@ -39,7 +39,7 @@ responses:
   - text: "Kaixo! Ni Linguo chatbot-a naiz."
 
   utter_explain:
-  - text: "Berria egunkariko artikuluak modu errazago batean bilatzeko programatu naute. Bilaketak ondo egiteko, bilatu nahi duzun titularraren hitz gakoak \" \" en artean jarri, mesedez."
+  - text: "Berria egunkariko artikuluak modu errazago batean bilatzeko programatu naute. Bilaketak egiteko, \"Futboleko artikuluak eman\" bezalako esaldiak erabili, mesedez."
 
   utter_error_msg:
   - text: "Barkatu, ez zaitut ulertu. Berriz errepikatuko?"
