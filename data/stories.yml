@@ -9,6 +9,6 @@ stories:
     - action: utter_greet
     - action: utter_explain
     - intent: choose_article_with_keywords
+    - action: action_display_found_articles
+    - intent: choose_article_index
     - action: action_return_article_content
-    - intent: more_information
-    - action: action_return_article_url

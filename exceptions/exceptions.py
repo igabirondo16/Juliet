@@ -1,0 +1,4 @@
+
+class NoFoundArticles(Exception):
+    pass
+

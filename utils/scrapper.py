@@ -21,6 +21,8 @@ BIZIGIRO_URL = "https://www.berria.eus/bizigiro/"
 
 topics = ["Azken berriak", "Berri irakurrienak", "Gizartea", "Politika", "Ekonomia", "Mundua", "Iritzia", "Kultura", "Kirola", "Bizigiro"]
 
+forbidden_tokens = ['berri', 'artikulu', 'albiste', 'notizi']
+
 tokenizer = IxaPipesTokenizer('eu')
 lemmatizer = IxaPipesPosTagger('eu', 'morph-models-1.5.0/eu/eu-pos-perceptron-epec.bin','morph-models-1.5.0/eu/eu-lemma-perceptron-epec.bin')
 
@@ -108,15 +110,23 @@ def get_articles(url, main_articles = False):
         l = elem.find('a')
         text = l.text
         url = l.get('href')
+
+        if not url.startswith('https://www.berria.eus'):
+            continue
+
         sub_header, first_paragraph = get_sub_header(url)
 
         text_to_lemmatize = text + " " +  sub_header + " " + first_paragraph
+
+        print(text_to_lemmatize)
 
         single_article['header'] = preprocess_header(text_to_lemmatize)
         single_article['original_header'] = text
         single_article['url'] = url
 
-        if sub_header:
+        sub_header = sub_header.replace(u'\xa0',u' ')
+
+        if sub_header and sub_header.strip():
             single_article['content'] = sub_header
 
         else:
@@ -173,6 +183,7 @@ def get_sub_header(url):
     Returns:
         Subheader of the article
     '''
+    print("Azken url: " +str(url))
     if url.startswith('/'):
         url = 'https://berria.eus' + url
     
@@ -182,8 +193,15 @@ def get_sub_header(url):
 
     sub_header = soup.find(id = 'albistea_titu').find_all('div', class_="article-sarrera")[0].text
     
-    # Extract the first paragraph of the artciel
-    first_paragraph = soup.find('div', class_="article-testua").find('p').text
+    # Extract the first paragraph of the article
+    first_paragraph = soup.find('div', class_="article-testua").find('p', recursive=False)
+    temp = first_paragraph.find('p', recursive=False)
+
+    if temp != None:
+        first_paragraph = temp.text
+
+    else:
+        first_paragraph = first_paragraph.text
 
     return sub_header, first_paragraph
 
@@ -209,16 +227,26 @@ def get_lemmatized_text(naf_text):
     return final_terms
 
 
+def filter_user_query(naf_text):
+    soup = BeautifulSoup(naf_text, 'xml')
+
+    terms = soup.find('terms').find_all('term')
+
+    final_terms = ""
+    for term in terms:
+        pos = term['morphofeat']
+
+        if pos.startswith("IZE") and term['lemma'] not in forbidden_tokens:
+            final_terms += " " + term['lemma']
+
+    return final_terms
+
 
 if __name__ == "__main__":
     try:
-        url = "https://www.berria.eus/"
-        output_file = "index.html"
-        file = "index-politika.html"
-        start = datetime.datetime.now()
-        print(get_all_articles())
-        end = datetime.datetime.now()
-        print("Execution time: " + str(end - start))
+        url = "https://www.berria.eus/paperekoa/1942/005/001/2022-04-03/genozidioa-berriz-europan.htm"
+        sub_header, first_paragraph = get_sub_header(url)
+        print(first_paragraph)
 
     except Exception as e:
         print(traceback.format_exc())

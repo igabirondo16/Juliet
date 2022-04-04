@@ -1,37 +1,15 @@
-# This files contains your custom actions which can be used to run
-# custom Python code.
-#
-# See this guide on how to implement these action:
-# https://rasa.com/docs/rasa/custom-actions
-
-
-# This is a simple example for a custom action which utters "Hello World!"
-
-# from typing import Any, Text, Dict, List
-#
-# from rasa_sdk import Action, Tracker
-# from rasa_sdk.executor import CollectingDispatcher
-#
-#
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []
-
+from email import message
 from typing import Any, Text, Dict, List
+from urllib import response
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 from utils.ArticlesKeeper import ArticlesKeeper
+from exceptions.exceptions import NoFoundArticles
+
+
+categories = ["Azken berriak", "Berri irakurrienak", "Gizartea", "Politika", "Ekonomia", "Mundua", "Iritzia", "Kultura", "Kirola", "Bizigiro"]
 
 
 class ActionInitializeArticleKeeper(Action):
@@ -47,7 +25,42 @@ class ActionInitializeArticleKeeper(Action):
 
         return [SlotSet('article_keeper', ak_json)]
 
+class ActionDisplayFoundArticles(Action):
 
+    def name(self) -> Text:
+        return "action_display_found_articles"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        try: 
+            ak_json = tracker.get_slot('article_keeper')
+            ak = ArticlesKeeper(ak_json)
+            user_query = tracker.latest_message['text']
+            print("Bilatzen ari naiz. User query: " + user_query)
+
+            article_list = ak.get_article_list_from_all_news(user_query)
+            dispatcher.utter_message(response='utter_found_messages')
+
+            index = 1
+
+            for article in article_list:
+                msg = str(index) +") " + article['original_header']
+                dispatcher.utter_message(text=msg)
+                index +=1
+
+            ak_json = ak.to_json()
+            return [SlotSet('article_keeper', ak_json)]
+
+        except NoFoundArticles:
+            dispatcher.utter_message(response='utter_error_no_messages')
+            return []
+
+        #except Exception:
+        #    dispatcher.utter_message(response='utter_error_general')
+        #    return  []
+        
 
 class ActionReturnArticleContent(Action):
 
@@ -58,42 +71,44 @@ class ActionReturnArticleContent(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        ak_json = tracker.get_slot('article_keeper')
-        ak = ArticlesKeeper(ak_json)
-        user_query = tracker.get_slot('article')
+        try:
 
-        result = ak.get_article_content_from_all_news(user_query)
+            ak_json = tracker.get_slot('article_keeper')
+            ak = ArticlesKeeper(ak_json)
+            article_index = int(tracker.get_slot('article_index'))
+            print("Article_index: " + str(article_index))
 
-        if result == None:
-            dispatcher.utter_message(response='utter_error_msg')
+            content, url = ak.get_article_content(article_index)
 
-        else:
-            dispatcher.utter_message(text=result)
+            if len(content) > 3500:
+                content_tokens = content.split()
+                num_tokens = 35
+                content = ""
 
-        ak_json = ak.to_json()
-        return [SlotSet('article_keeper', ak_json)]
+                for i in range(num_tokens):
+                    content += content_tokens[i] + " "
 
+                content += " ..."
 
-class ActionReturnArticleUrl(Action):
+            if content.endswith('\n'):
+                msg = content + url
 
-    def name(self) -> Text:
-        return "action_return_article_url"
+            else:
+                msg = content + "\n" + url
+            
+            dispatcher.utter_message(text=msg)
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+            ak_json = ak.to_json()
+            return [SlotSet('article_keeper', ak_json)]
 
-        ak_json = tracker.get_slot('article_keeper')
-        ak = ArticlesKeeper(ak_json)
+        except ValueError:
+            dispatcher.utter_message(response='utter_error_article_value')
+            return []
 
-        result = ak.get_article()
+        except IndexError:
+            dispatcher.utter_message(response='utter_error_article_index')
+            return []
 
-        if result == None:
-            dispatcher.utter_message(response='utter_error_msg')
-
-        else:
-            url = result['url']
-            dispatcher.utter_message(text=url)
-
-        ak_json = ak.to_json()
-        return [SlotSet('article_keeper', ak_json)]
+        except Exception:
+            dispatcher.utter_message(response='utter_error_general')
+            return  []

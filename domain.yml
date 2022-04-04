@@ -4,42 +4,77 @@ intents:
   - greet
   - goodbye
   - choose_article_with_keywords
-  - more_information
+  - choose_article_index
 
 
 entities:
-  - article
+  - category
+  - article_index
 
 slots:
-  article:
-    type: text
-    initial_value: ""
-    mappings:
-      - type: from_entity
-        entity: article
-
   article_keeper:
     type: any
     mappings:
       - type: custom
 
+
+  article_index:
+    type: any
+    mappings:
+      - type: from_entity
+        entity: article_index
+        intent: choose_article_index
+
+
+  category:
+    type: text
+    initial_value: ""
+    mappings:
+      - type: from_entity
+        entity: category
+
+
 responses:
   utter_greet:
-  - text: "Kaixo! Ni Juliet chatbot-a naiz."
+  - text: "Kaixo! Ni Linguo chatbot-a naiz."
 
   utter_explain:
-  - text: "Berria egunkariko artikuluak modu errazago batean bilatzeko programatu naute. Bilaketak ondo egiteko, bilatu nahi duzun titularraren hitz gakoak \" en artean jarri, mesedez."
+  - text: "Berria egunkariko artikuluak modu errazago batean bilatzeko programatu naute. Bilaketak ondo egiteko, bilatu nahi duzun titularraren hitz gakoak \" \" en artean jarri, mesedez."
 
   utter_error_msg:
   - text: "Barkatu, ez zaitut ulertu. Berriz errepikatuko?"
   - text: "Ez dakit zer den eskatzen ari zarena. Mesedez, beste modu batera probatu."
   - text: "Ez dut ulertu eskatutakoa. Agian beste modu batean esanez gero ulertuko zaitut."
 
+  utter_found_messages:
+  - text: "Ondorengo artikuluak aurkitu ditut:"
+  - text: "Hauxe da aurkitu dudana:"
+  - text: "Hau aurkitu dut, ea interesatzen zaizun:"
+
+  utter_error_no_messages:
+  - text: "Ez dut artikulurik topatu arlo horren inguruan."
+  - text: "Egin duzun eskaerarentzat ez dut ezer aurkitu."
+  - text: "Ez dut erantzunik aurkitu zure galderarentzat."
+
+  utter_error_article_index:
+  - text: "Ez ditut hainbeste artikulu aurkitu."
+  - text: "Ez daukat eskatzen ari zaren albistea."
+  - text: "Aurkitu ditudan notizien kopuruaren artean aukeratu behar duzu."
+
+  utter_error_article_value:
+  - text: "Artikuluaren zenbakia eman honen edukia jasotzeko."
+  - text: "Artikulu baten edukia eskatzeko, lehenengoa, bigarrena edo hirugarrena hitzak erabili, mesedez (1, 2 eta 3 zenbakiak ere erabili ditzakezu)."
+  - text: "Berri baten edukia ematea nahi baldin baduzu, lehena, bigarrena edo hirugarrena bezalako espresioak erabili ditzakezu."
+
+  utter_error_general:
+  - text: "Dirudienez zerbait gaizki joan da. Beste modu batera probatuz gero agian aurkituko dut zuk eskatutako berria."
+  - text: "Matxuraren bat dudala dirudi. Egindako eskaera beste modu batera probatu."
+  - text: "Nire egileak hanka sartu du programazioan. Egindako eskaera beste modu batera probatu."
 
 actions:
   - action_initialize_article_keeper
+  - action_display_found_articles
   - action_return_article_content
-  - action_return_article_url
 
 session_config:
   session_expiration_time: 60

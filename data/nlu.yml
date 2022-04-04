@@ -1,9 +1,59 @@
 version: "3.0"
 
 nlu:
-- regex: article
+
+- synonym: "0"
   examples: |
-    - [\"\'](.+?)[\"\']
+    - 1
+    - Bat
+    - Lehenengoa
+    - Lehenengo
+    - Lehen
+
+- synonym: "1"
+  examples: |
+    - 2
+    - Bi
+    - Bigarrena
+    - Bigarren
+
+- synonym: "2"
+  examples: |
+    - 3
+    - Hiru
+    - Hirugarrena
+    - Hirugarren
+
+- lookup: category
+  examples: |
+    - Azken berriak
+    - Berri irakurrienak
+    - Gizartea
+    - Politika
+    - Ekonomia
+    - Mundua
+    - Iritzia
+    - Kultura
+    - Kirola
+    - Bizigiro
+
+- lookup: article_index
+  examples: |
+    - 1
+    - Bat
+    - Lehenengoa
+    - Lehenengo
+    - Lehena
+    - Lehen
+    - 2
+    - Bi
+    - Bigarrena
+    - Bigarren
+    - 3
+    - Hiru
+    - Hirugarrena
+    - Hirugarren
+
 
 - intent: greet
   examples: |
@@ -25,30 +75,52 @@ nlu:
     - Agur 
     - Aio
 
+- intent: choose_article_index
+  examples: |
+    - [Lehenengo]{"entity":"article_index", "value":"0"} artikulua nahi dut
+    - [Lehen]{"entity":"article_index", "value":"0"} artikulua
+    - [Lehena]{"entity":"article_index", "value":"0"} nahi dut
+    - [Lehena]{"entity":"article_index", "value":"0"}
+    - [1]{"entity":"article_index", "value":"0"}
+    - [Bigarrengo]{"entity":"article_index", "value":"1"} artikulua nahi dut
+    - [Bigarren]{"entity":"article_index", "value":"1"} artikulua
+    - [Bigarrena]{"entity":"article_index", "value":"1"} nahi dut
+    - [Bigarrena]{"entity":"article_index", "value":"1"}
+    - [2]{"entity":"article_index", "value":"1"}
+    - [Hirugarren]{"entity":"article_index", "value":"2"} artikulua nahi dut
+    - [Hirugarren]{"entity":"article_index", "value":"2"} artikulua
+    - [Hirugarrena]{"entity":"article_index", "value":"2"} nahi dut
+    - [Hirugarrena]{"entity":"article_index", "value":"2"}
+    - [3]{"entity":"article_index", "value":"2"} 
+    
+
 - intent: choose_article_with_keywords
   examples: |
-    - "[Gorriz markatutako eguna]{"entity":"article"}" artikulua eman
-    - "[Hutsik dago Olarizu]{"entity":"article"}" artikuluari buruz interesa daukat 
-    - "[Hutsik dago Olarizu]{"entity":"article"}" artikuluari buruz interesa daukat
-    - "[Hutsik dago Olarizu]{"entity":"article"}" artikuluari buruz gehiago kontatu mesedez
-    - "[Gure geografia]{"entity":"article"}" artikulua
-    - "[Gorriz markatutako eguna]{"entity":"article"}" artikulua eman
-    - "[Hutsik dago Olarizu]{"entity":"article"}" artikulua erakutsi
-    - Zerri buruz doa "[Hutsik dago Olarizu]{"entity":"article"}"?
-    - Zer kontatu dezakezu "[Hutsik dago Olarizu]{"entity":"article"}" artikuluari buruz?
-    - "[Hondarrik ere ez da uzten ari]{"entity":"article"}" artikuluari buruz gehiago esan
-    - Zer dio "[Hondarrik ere ez da uzten ari]{"entity":"article"}" artikuluak
-    - "[Hondarrik ere ez da uzten ari]{"entity":"article"}" artikulua eman
-    - "[Hondarrik ere ez da uzten ari]{"entity":"article"}" artikuluaren informazio gehiago eman
-    - "[Frantziako Poliziak miaketa bat egin du Bahrain taldeko hotelean]{"entity":"article"}" artikulua eman
+    - Gorriz markatutako eguna artikulua eman
+    - Hutsik dago Olarizu artikuluari buruz interesa daukat 
+    - Hutsik dago Olarizu artikuluari buruz interesa daukat
+    - Hutsik dago Olarizu artikuluari buruz gehiago kontatu mesedez
+    - Gure geografia artikulua
+    - Gorriz markatutako eguna artikulua eman
+    - Hutsik dago Olarizu artikulua erakutsi
+    - Zerri buruz doa Hutsik dago Olarizu?
+    - Zer kontatu dezakezu Hutsik dago Olarizu artikuluari buruz?
+    - Hondarrik ere ez da uzten ari artikuluari buruz gehiago esan
+    - Zer dio Hondarrik ere ez da uzten ari artikuluak
+    - Hondarrik ere ez da uzten ari artikulua eman
+    - Hondarrik ere ez da uzten ari artikuluaren informazio gehiago eman
+    - Frantziako Poliziak miaketa bat egin du Bahrain taldeko hotelean artikulua eman
+    - Zer gertatu da Ukrainan?
+    - Errealari buruz berririk ba al dago?
+    - Ba al dago zerbait Pedro Sanchez-i buruz?
+    - Marruecos-en artikulua 
+    - Sahararen artikulua
+    - Pandemiarekin zerbait gertatu da
+    - Koronabirusaren notiziak 
+    - Zein artikulu daude Luis Roldani buruz
+    - Futbolaren artikuluak 
+    - Zer kontatu dezakezu Europari buruz?
+    - Errusiari buruz informazioa 
+   
 
-- intent: more_information
-  examples: |
-    - Esteka eman
-    - Artikuluaren esteka eman
-    - Informazio gehiago eman
-    - Gehiago jakin nahi dut
-    - Gehiago kontatu
-    - Berria luzatu
-    - Zer gehiago dio berriak?
 

@@ -1,12 +1,13 @@
 
 from whoosh import index
 from whoosh.qparser import QueryParser
-from whoosh import scoring
+from whoosh import scoring, sorting
+from whoosh import qparser
 
 from ixapipes.tok import IxaPipesTokenizer
 from ixapipes.pos import IxaPipesPosTagger
 
-from utils.scrapper import get_lemmatized_text
+from utils.scrapper import filter_user_query
 
 class QuerySearcher:
 
@@ -18,27 +19,36 @@ class QuerySearcher:
         # Open the index of the category
         ix = index.open_dir('index', indexname=category)
 
-        qp = QueryParser('header', schema = ix.schema)
+        qp = QueryParser('header', schema = ix.schema, group=qparser.OrGroup)
+        #qp = QueryParser('header', schema=ix.schema)
         q = qp.parse(query)
+        print(q)
 
         with ix.searcher(weighting = scoring.BM25F(B=0)) as searcher:
             
             if not searcher.up_to_date():
                 searcher = searcher.refresh()
 
-            results = searcher.search(q, limit=5)
+            results = searcher.search(q, limit=3)
 
             if not results:
                 return None
 
             else:
-                article = {}
-                article['header'] = results[0].get('header')
-                article['original_header'] = results[0].get('original_header')
-                article['url'] = results[0].get('url')
-                article['content'] = results[0].get('content')
+                articles = []
+                
+                for result in results:
+                    temp_article = {}
+                    temp_article['header'] = result.get('header')
+                    temp_article['original_header'] = result.get('original_header')
+                    temp_article['url'] = result.get('url')
+                    temp_article['content'] = result.get('content')
 
-                return article
+                    if temp_article not in articles:    
+                        articles.append(temp_article)
+
+                
+                return articles
     
 
     def __preprocess_user_query(self, header):
@@ -50,10 +60,9 @@ class QuerySearcher:
         if self.lemmatizer == None:
             self.lemmatizer = IxaPipesPosTagger('eu', 'morph-models-2.5.0/eu/eu-pos-perceptron-epec.bin','morph-models-1.5.0/eu/eu-lemma-perceptron-epec.bin')
 
-
         tokens = self.tokenizer(header)
         lemmas = self.lemmatizer(tokens)
-        final_lemmas = get_lemmatized_text(lemmas)
+        final_lemmas = filter_user_query(lemmas)
         return final_lemmas
 
 

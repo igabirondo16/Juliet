@@ -1,4 +1,13 @@
 version: "3.0"
 
 rules:
+  #- rule: Show categories depending on user option (TEST)
+  #  steps:
+  #    - intent: ask_category
+  #    - action: action_show_categories
+
+  - rule: Look for articles every time a user makes a query
+    steps:
+      - intent: choose_article_with_keywords
+      - action: action_display_found_articles 
 

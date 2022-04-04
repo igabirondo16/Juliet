@@ -1,4 +1,5 @@
 from utils.QuerySearcher import QuerySearcher
+from exceptions.exceptions import NoFoundArticles
 import json
 
 class ArticlesKeeper(object):
@@ -7,10 +8,12 @@ class ArticlesKeeper(object):
 
         if json_file == {}:
             self.article = {}
+            self.article_list = []
 
         else:
             json_data = json.loads(json_file)
             self.article = json_data['article']
+            self.article_list = json_data['article_list']
 
     def to_json(self):
          return json.dumps(self, default=lambda o: o.__dict__, 
@@ -21,6 +24,12 @@ class ArticlesKeeper(object):
 
     def get_article(self):
         return self.article
+
+    def set_article_list(self, article_list):
+        self.article_list = article_list
+
+    def get_article_list(self):
+        return self.article_list
     
     def get_articles_by_category(self, category):
         qs = QuerySearcher()
@@ -34,18 +43,24 @@ class ArticlesKeeper(object):
 
         return output_msg
 
-    def get_article_content_from_category(self, category, user_query):
+    def get_article_list_from_category(self, category, user_query):
         qs = QuerySearcher()
-        result = qs.search_article(category, user_query)
-        print("RESULT: " + str(result))
+        article_list = qs.search_article(category, user_query)
+        print("RESULT: " + str(article_list))
 
-        if result == None:
-            return None
+        if article_list == None:
+            raise NoFoundArticles
 
-        self.set_article(result)
-        return result['content']
+        self.set_article_list(article_list)
+        return article_list
 
-    def get_article_content_from_all_news(self, user_query):
-        result = self.get_article_content_from_category('all_articles', user_query)
-        return result
+    def get_article_list_from_all_news(self, user_query):
+        article_list = self.get_article_list_from_category('all_articles', user_query)
+        return article_list
+
+    def get_article_content(self, article_index):
+        article_list = self.get_article_list()
+        article = article_list[article_index]
+        self.set_article(article)
+        return article['content'], article['url']
 
