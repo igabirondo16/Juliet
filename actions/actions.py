@@ -80,51 +80,6 @@ class ActionDisplayFoundArticles(Action):
             dispatcher.utter_message(response='utter_error_general')
             return  []
 
-'''
-class ActionDisplayCategoryArticles(Action):
-
-    def name(self) -> Text:
-        return "action_display_category_articles"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        try: 
-            ak_json = tracker.get_slot('article_keeper')
-            ak = ArticlesKeeper(ak_json)
-            
-            category = tracker.get_slot('category')
-            print("Kategoria bilatzen: " + category)
-
-            article_list = ak.get_articles_by_category(category)
-            dispatcher.utter_message(response='utter_found_messages')
-
-            index = 1
-            buttons = []
-
-            for article in article_list:
-                msg = str(index) +") " + article['original_header']
-                btn = {"title":str(index), "payload":"/choose_article_index{\"article_index\":\"" + str(index-1) + "\"}"}
-                
-                buttons.append(btn)
-
-                if index == len(article_list):
-                    dispatcher.utter_message(text=msg, buttons=buttons, button_type="inline")
-                else:
-                    dispatcher.utter_message(text=msg)
-
-                index +=1
-
-
-            ak_json = ak.to_json()
-            return [SlotSet('article_keeper', ak_json), SlotSet('category', "")]
-
-        except Exception:
-            dispatcher.utter_message(response='utter_error_general')
-            return  []
-
-'''
 
 class ActionReturnArticleContent(Action):
 

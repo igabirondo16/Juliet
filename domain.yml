@@ -3,7 +3,6 @@ version: "3.0"
 intents:
   - greet
   - goodbye
-  #- choose_article_with_keywords
   - choose_article_index
   - choose_category
 
@@ -38,7 +37,7 @@ slots:
 
 responses:
   utter_greet:
-  - text: "Kaixo! Ni Linguo chatbot-a naiz."
+  - text: "Kaixo! Ni Juliet chatbot-a naiz."
 
   utter_explain:
   - text: "Berria egunkariko artikuluak modu errazago batean bilatzeko programatu naute. Bilaketak egiteko, \"Futboleko artikuluak eman\" bezalako esaldiak erabili, mesedez."
@@ -77,7 +76,6 @@ actions:
   - action_initialize_article_keeper
   - action_display_found_articles
   - action_return_article_content
-  #- action_display_category_articles
 
 session_config:
   session_expiration_time: 60

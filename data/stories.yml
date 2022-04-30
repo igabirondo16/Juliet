@@ -13,13 +13,3 @@ stories:
     - intent: choose_article_index
     - action: action_return_article_content
 
-#- story: get the first three articles from a category
-#  steps:
-#    - intent: greet
-#    - action: action_initialize_article_keeper
-#    - action: utter_greet
-#    - action: utter_explain
-#    - intent: choose_category
-#    - action: action_display_category_articles
-#    - intent: choose_article_index
-#    - action: action_return_article_content
