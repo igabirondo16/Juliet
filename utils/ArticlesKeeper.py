@@ -34,14 +34,18 @@ class ArticlesKeeper(object):
     def get_articles_by_category(self, category):
         qs = QuerySearcher()
         news = qs.get_news_by_category(category)
-        output_msg = "Kategoria: " + category + "\n\n"
-        index = 1
+        
+        news_list = []
+        idx = 0
         for new in news:
-            header = new['original_header']
-            output_msg += str(index) + ") " + header + "\n"
-            index += 1
+            if idx > 2:
+                break
 
-        return output_msg
+            news_list.append(new)
+            idx += 1
+
+        self.set_article_list(news_list)
+        return news_list
 
     def get_article_list_from_category(self, category, user_query):
         qs = QuerySearcher()

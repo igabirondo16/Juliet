@@ -3,8 +3,9 @@ version: "3.0"
 intents:
   - greet
   - goodbye
-  - choose_article_with_keywords
+  #- choose_article_with_keywords
   - choose_article_index
+  - choose_category
 
 
 entities:
@@ -19,7 +20,8 @@ slots:
 
 
   article_index:
-    type: any
+    type: text
+    initial_value: ""
     mappings:
       - type: from_entity
         entity: article_index
@@ -75,6 +77,7 @@ actions:
   - action_initialize_article_keeper
   - action_display_found_articles
   - action_return_article_content
+  #- action_display_category_articles
 
 session_config:
   session_expiration_time: 60

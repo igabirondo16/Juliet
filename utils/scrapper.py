@@ -21,7 +21,7 @@ BIZIGIRO_URL = "https://www.berria.eus/bizigiro/"
 
 topics = ["Azken berriak", "Berri irakurrienak", "Gizartea", "Politika", "Ekonomia", "Mundua", "Iritzia", "Kultura", "Kirola", "Bizigiro"]
 
-forbidden_tokens = ['berri', 'artikulu', 'albiste', 'notizi']
+forbidden_tokens = ['berri', 'artikulu', 'albiste', 'albistea', 'albisteak', 'notizi', 'notizia', 'notiziak']
 
 tokenizer = IxaPipesTokenizer('eu')
 lemmatizer = IxaPipesPosTagger('eu', 'morph-models-1.5.0/eu/eu-pos-perceptron-epec.bin','morph-models-1.5.0/eu/eu-lemma-perceptron-epec.bin')
@@ -75,6 +75,7 @@ def get_file_url(option):
 def preprocess_header(header):
     tokens = tokenizer(header)
     lemmas = lemmatizer(tokens)
+    print(lemmas)
     final_lemmas = get_lemmatized_text(lemmas)
     return final_lemmas
 
@@ -105,34 +106,38 @@ def get_articles(url, main_articles = False):
     articles = []
 
     for elem in links:
-        single_article = {}
-        
-        l = elem.find('a')
-        text = l.text
-        url = l.get('href')
+        try:
+            single_article = {}
+            
+            l = elem.find('a')
+            text = l.text
+            url = l.get('href')
 
-        if not url.startswith('https://www.berria.eus'):
+            if not url.startswith('https://www.berria.eus'):
+                continue
+
+            sub_header, first_paragraph = get_sub_header(url)
+
+            text_to_lemmatize = text + " " +  sub_header + " " + first_paragraph
+
+            print(text_to_lemmatize)
+
+            single_article['header'] = preprocess_header(text_to_lemmatize)
+            single_article['original_header'] = text
+            single_article['url'] = url
+
+            sub_header = sub_header.replace(u'\xa0',u' ')
+
+            if sub_header and sub_header.strip():
+                single_article['content'] = sub_header
+
+            else:
+                single_article['content'] = first_paragraph
+            
+            articles.append(single_article)
+
+        except Exception:
             continue
-
-        sub_header, first_paragraph = get_sub_header(url)
-
-        text_to_lemmatize = text + " " +  sub_header + " " + first_paragraph
-
-        print(text_to_lemmatize)
-
-        single_article['header'] = preprocess_header(text_to_lemmatize)
-        single_article['original_header'] = text
-        single_article['url'] = url
-
-        sub_header = sub_header.replace(u'\xa0',u' ')
-
-        if sub_header and sub_header.strip():
-            single_article['content'] = sub_header
-
-        else:
-            single_article['content'] = first_paragraph
-        
-        articles.append(single_article)
 
     return articles
 
@@ -191,7 +196,12 @@ def get_sub_header(url):
     html_file = requests.get(url).text
     soup = BeautifulSoup(html_file, "html.parser")
 
-    sub_header = soup.find(id = 'albistea_titu').find_all('div', class_="article-sarrera")[0].text
+    sub_header = soup.find(id = 'albistea_titu')
+    if sub_header == None:
+        sub_header = ""
+
+    else:
+        sub_header = sub_header.find_all('div', class_="article-sarrera")[0].text
     
     # Extract the first paragraph of the article
     first_paragraph = soup.find('div', class_="article-testua").find('p', recursive=False)

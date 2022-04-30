@@ -24,6 +24,82 @@ nlu:
     - Hirugarrena
     - Hirugarren
 
+- synonym: "Azken berriak"
+  examples: |
+    - Azken berriak
+    - Azken berrien
+    - Azken berria
+    - Azkenak
+  
+- synonym: "Berri irakurrienak"
+  examples: |
+    - Berri irakurrienak
+    - Berri irakurrienen
+    - Irakurrienak
+    - Berri irakurriena
+
+- synonym: "Gizartea"
+  examples: |
+    - Gizarteko
+    - Gizartearen
+    - Gizarte
+    - Gizartean
+
+- synonym: "Politika"
+  examples: |
+    - Politikako
+    - Politikaren
+    - Politikan
+    - Politika
+
+- synonym: "Ekonomia"
+  examples: |
+    - Ekonomiaren
+    - Ekonomiako
+    - Ekonomian
+    - Ekonomia
+
+- synonym: "Mundua"
+  examples: |
+    - Munduko
+    - Munduaren
+    - Munduan
+    - Mundu
+    - Mundua
+
+- synonym: "Iritzia"
+  examples: |
+    - Iritziaren
+    - Iritziko
+    - Iritzian
+    - Iritzi
+    - Iritzia
+
+- synonym: "Kultura"
+  examples: |
+    - Kulturaren
+    - Kulturako
+    - Kulturan
+    - Kultur
+    - Kultura
+
+- synonym: "Kirola"
+  examples: |
+    - Kirolaren
+    - Kirolan
+    - Kiroletako
+    - Kirolako
+    - Kirol
+    - Kirola
+    - Kirolen
+
+- synonym: "Bizigiro"
+  examples: |
+    - Bizigiroren
+    - Bizigiron
+    - Bizigiroko
+    - Bizigiro
+
 - lookup: category
   examples: |
     - Azken berriak
@@ -54,7 +130,6 @@ nlu:
     - Hirugarrena
     - Hirugarren
 
-
 - intent: greet
   examples: |
     - Kaixo
@@ -75,6 +150,67 @@ nlu:
     - Agur 
     - Aio
 
+
+- intent: choose_category
+  examples: |
+    - [Azken berriak]{"entity":"category", "value":"Azken berriak"} eman
+    - Zer gertatu da [azken berrietan]{"entity":"category", "value":"Azken berriak"}?
+    - [Azken berriak]{"entity":"category", "value":"Azken berriak"}
+    - [Berri irakurrienak]{"entity":"category", "value":"Berri irakurrienak"} eman
+    - [Irakurrienak]{"entity":"category", "value":"Berri irakurrienak"} eman
+    - Zer gertatu da [berri irakurrienetan]{"entity":"category", "value":"Berri irakurrienak"}?
+    - [Berri irakurrienak]{"entity":"category", "value":"Berri irakurrienak"}
+    - [Irakurrienak]{"entity":"category", "value":"Berri irakurrienak"}
+    - [Gizarteko]{"entity":"category", "value":"Gizartea"} berriak eman
+    - [Gizarteko]{"entity":"category", "value":"Gizartea"} albisteak eman
+    - [Gizarteko]{"entity":"category", "value":"Gizartea"} artikuluak
+    - Zer gertatu da [gizartean]{"entity":"category", "value":"Gizartea"}?
+    - [Gizartea]{"entity":"category", "value":"Gizartea"}
+    - [Politikako]{"entity":"category", "value":"Politika"} berriak eman
+    - [Politikako]{"entity":"category", "value":"Politika"} albisteak eman
+    - [Politikako]{"entity":"category", "value":"Politika"} artikuluak
+    - Zer gertatu da [politikan]{"entity":"category", "value":"Politika"}? 
+    - [Politika]{"entity":"category", "value":"Politika"}
+    - [Ekonomiako]{"entity":"category", "value":"Ekonomia"} berriak eman
+    - [Ekonomiako]{"entity":"category", "value":"Ekonomia"} albisteak eman
+    - [Ekonomiako]{"entity":"category", "value":"Ekonomia"} artikuluak
+    - Zer gertatu da [ekonomian]{"entity":"category", "value":"Ekonomia"}?
+    - [Ekonomia]{"entity":"category", "value":"Ekonomia"}
+    - [Munduko]{"entity":"category", "value":"Mundua"} berriak eman
+    - [Munduko]{"entity":"category", "value":"Mundua"} albisteak
+    - [Munduko]{"entity":"category", "value":"Mundua"} artikuluak
+    - Zer gertatu da [munduan]{"entity":"category", "value":"Mundua"}?
+    - [Mundua]{"entity":"category", "value":"Mundua"}
+    - [Iritziko]{"entity":"category", "value":"Iritzia"} berriak eman
+    - [Iritziko]{"entity":"category", "value":"Iritzia"} albisteak eman
+    - [Iritziko]{"entity":"category", "value":"Iritzia"} artikuluak
+    - Zer gertatu da [iritzian]{"entity":"category", "value":"Iritzia"}?
+    - [Iritzia]{"entity":"category", "value":"Iritzia"}
+    - [Kulturako]{"entity":"category", "value":"Kultura"} berriak eman
+    - [Kulturako]{"entity":"category", "value":"Kultura"} albisteak eman
+    - [Kulturako]{"entity":"category", "value":"Kultura"} artikuluak
+    - Zer gertatu da [kulturan]{"entity":"category", "value":"Kultura"}?
+    - [Kultura]{"entity":"category", "value":"Kultura"}
+    - [Kiroletako]{"entity":"category", "value":"Kirola"} berriak eman
+    - [Kiroletako]{"entity":"category", "value":"Kirola"} albisteak eman
+    - [Kiroletako]{"entity":"category", "value":"Kirola"} artikuluak
+    - Zer gertatu da [kirolan]{"entity":"category", "value":"Kirola"}?
+    - [Kirola]{"entity":"category", "value":"Kirola"}
+    - [Bizigiroren]{"entity":"category", "value":"Bizigiro"} berriak eman
+    - [Bizigiroren]{"entity":"category", "value":"Bizigiro"} albisteak eman
+    - [Bizigiroren]{"entity":"category", "value":"Bizigiro"} artikuluak
+    - Zer gertatu da [bizigiron]{"entity":"category", "value":"Bizigiro"}?
+    - [Bizigiro]{"entity":"category", "value":"Bizigiro"}
+    - Ba al dago Ukrainari buruzko berriak?
+    - Ukrainaren berriak eman
+    - Ukrainaren albisteak eman
+    - Ukrainaren artikuluak eman
+    - Zer gertatu da Ukrainan?
+    - Ukrainaren artikuluak
+    - Ukrainaren albisteak
+    - Ukrainaren berriak
+    - Artikulurik ba al dago Ukrainari buruz?
+
 - intent: choose_article_index
   examples: |
     - [Lehenengo]{"entity":"article_index", "value":"0"} artikulua nahi dut
@@ -92,35 +228,48 @@ nlu:
     - [Hirugarrena]{"entity":"article_index", "value":"2"} nahi dut
     - [Hirugarrena]{"entity":"article_index", "value":"2"}
     - [3]{"entity":"article_index", "value":"2"} 
+
+
+#- intent: choose_article_with_keywords
+#  examples: |
+#    - Ba al dago Ukrainari buruzko berriak?
+#    - Ukrainaren berriak eman
+#    - Ukrainaren albisteak eman
+#    - Ukrainaren artikuluak eman
+#    - Zer gertatu da Ukrainan?
+#    - Ukrainaren artikuluak
+#    - Ukrainaren albisteak
+#    - Ukrainaren berriak
+#    - Artikulurik ba al dago Ukrainari buruz?
     
 
-- intent: choose_article_with_keywords
-  examples: |
-    - Gorriz markatutako eguna artikulua eman
-    - Hutsik dago Olarizu artikuluari buruz interesa daukat 
-    - Hutsik dago Olarizu artikuluari buruz interesa daukat
-    - Hutsik dago Olarizu artikuluari buruz gehiago kontatu mesedez
-    - Gure geografia artikulua
-    - Gorriz markatutako eguna artikulua eman
-    - Hutsik dago Olarizu artikulua erakutsi
-    - Zerri buruz doa Hutsik dago Olarizu?
-    - Zer kontatu dezakezu Hutsik dago Olarizu artikuluari buruz?
-    - Hondarrik ere ez da uzten ari artikuluari buruz gehiago esan
-    - Zer dio Hondarrik ere ez da uzten ari artikuluak
-    - Hondarrik ere ez da uzten ari artikulua eman
-    - Hondarrik ere ez da uzten ari artikuluaren informazio gehiago eman
-    - Frantziako Poliziak miaketa bat egin du Bahrain taldeko hotelean artikulua eman
-    - Zer gertatu da Ukrainan?
-    - Errealari buruz berririk ba al dago?
-    - Ba al dago zerbait Pedro Sanchez-i buruz?
-    - Marruecos-en artikulua 
-    - Sahararen artikulua
-    - Pandemiarekin zerbait gertatu da
-    - Koronabirusaren notiziak 
-    - Zein artikulu daude Luis Roldani buruz
-    - Futbolaren artikuluak 
-    - Zer kontatu dezakezu Europari buruz?
-    - Errusiari buruz informazioa 
+#- intent: choose_article_with_keywords
+#  examples: |
+#    - Gorriz markatutako eguna artikulua eman
+#    - Hutsik dago Olarizu artikuluari buruz interesa daukat 
+#    - Hutsik dago Olarizu artikuluari buruz interesa daukat
+#    - Hutsik dago Olarizu artikuluari buruz gehiago kontatu mesedez
+#    - Gure geografia artikulua
+#    - Gorriz markatutako eguna artikulua eman
+#    - Hutsik dago Olarizu artikulua erakutsi
+#    - Zerri buruz doa Hutsik dago Olarizu?
+#    - Zer kontatu dezakezu Hutsik dago Olarizu artikuluari buruz?
+#    - Hondarrik ere ez da uzten ari artikuluari buruz gehiago esan
+#    - Zer dio Hondarrik ere ez da uzten ari artikuluak
+#    - Hondarrik ere ez da uzten ari artikulua eman
+#    - Hondarrik ere ez da uzten ari artikuluaren informazio gehiago eman
+#    - Frantziako Poliziak miaketa bat egin du Bahrain taldeko hotelean artikulua eman
+#    - Zer gertatu da Ukrainan?
+#    - Errealari buruz berririk ba al dago?
+#    - Ba al dago zerbait Pedro Sanchez-i buruz?
+#    - Marruecos-en artikulua 
+#    - Sahararen artikulua
+#    - Pandemiarekin zerbait gertatu da
+#    - Koronabirusaren notiziak 
+#    - Zein artikulu daude Luis Roldani buruz
+#    - Futbolaren artikuluak 
+#    - Zer kontatu dezakezu Europari buruz?
+#    - Errusiari buruz informazioa 
    
 
 

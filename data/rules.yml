@@ -8,6 +8,11 @@ rules:
 
   - rule: Look for articles every time a user makes a query
     steps:
-      - intent: choose_article_with_keywords
+      - intent: choose_category
       - action: action_display_found_articles 
+
+  #- rule: Display the first three articles of a category every time the user wants to
+  #  steps:
+  #    - intent: choose_category
+  #    - action: action_display_category_articles
 
