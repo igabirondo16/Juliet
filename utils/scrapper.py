@@ -3,7 +3,7 @@ from re import sub
 import traceback
 from bs4 import BeautifulSoup
 import requests
-import datetime
+
 
 from ixapipes.tok import IxaPipesTokenizer
 from ixapipes.pos import IxaPipesPosTagger

@@ -20,7 +20,7 @@ class QuerySearcher:
         ix = index.open_dir('index', indexname=category)
 
         qp = QueryParser('header', schema = ix.schema, group=qparser.OrGroup)
-        #qp = QueryParser('header', schema=ix.schema)
+        
         q = qp.parse(query)
         print(q)
 
