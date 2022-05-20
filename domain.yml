@@ -40,7 +40,9 @@ responses:
   - text: "Kaixo! Ni Juliet chatbot-a naiz."
 
   utter_explain:
-  - text: "Berria egunkariko artikuluak modu errazago batean bilatzeko programatu naute. Bilaketak egiteko, \"Futboleko artikuluak eman\" bezalako esaldiak erabili, mesedez."
+  - text: "Berria egunkariko artikuluak modu errazago batean bilatzeko programatu naute. Bilaketak egiteko, \"hitz_gakoak albisteak\" moduko formatua erabili, mesedez. Adibidez: \"Futboleko albisteak\"."
+  - text: "Berria egunkariko notiziak bilatu eta emateko gai naiz. Zerbait jakin nahi baldin baduzu, \"hitz_gakoak notiziak\" moduan bilatu dezakezu. Adibidez: \"Finlandia eta Suedia albisteak\"."
+  - text: "Berria egunkaritik berriak hartu eta zuri kontatzeko sortu naute. Zerbait bilatzeko: \"hitz_gakoak berriak\" formatu erabili. Adibidez: \"Eurovision berriak\"."
 
   utter_error_msg:
   - text: "Barkatu, ez zaitut ulertu. Berriz errepikatuko?"
@@ -72,10 +74,14 @@ responses:
   - text: "Matxuraren bat dudala dirudi. Egindako eskaera beste modu batera probatu."
   - text: "Nire egileak hanka sartu du programazioan. Egindako eskaera beste modu batera probatu."
 
+  utter_help_msg:
+  - text: "Laguntza mezua: \n Albisteak edo kategoriak bilatzeko ondorengo formatuak onartzen dira: \n - \"Hitz_gakoak albisteak\"\n - \"Hitz_gakoak berriak\"\n - \"Hitz_gakoak notiziak\"\n\n Behin notiziak aurkitutakoan horrela aukeratu daitezke: \n - Lehenengo, bigarrena edo hirugarrena. \n - Bat, bi edo hiru. \n - 1, 2 edo 3. \n - Botoiak erabiliz."
+
 actions:
   - action_initialize_article_keeper
   - action_display_found_articles
   - action_return_article_content
+  - action_display_help
 
 session_config:
   session_expiration_time: 60

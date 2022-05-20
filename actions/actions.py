@@ -25,7 +25,9 @@ def write_sentence(tracker, text=""):
     intent = tracker.latest_message['intent']
     sender_id = tracker.sender_id
 
-    with open('./conversations/conversations.csv', 'a') as f:
+    file_path = './conversations/' + str(sender_id) + '.csv'
+
+    with open(file_path, 'a') as f:
         writer = csv.writer(f, delimiter='\t')
         writer.writerow([current_time, sender_id, intent, text])
 
@@ -39,7 +41,6 @@ class ActionInitializeArticleKeeper(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        print(tracker.sender_id)
         ak_json = ArticlesKeeper().to_json()
 
         write_sentence(tracker)
@@ -199,3 +200,20 @@ class ActionReturnArticleContent(Action):
 
             dispatcher.utter_message(response='utter_error_general')
             return  []
+
+
+class ActionDisplayHelp(Action):
+
+    def name(self) -> Text:
+        return "action_display_help"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        write_sentence(tracker)
+
+        text = "CHATBOT: LAGUNTZA MEZUA"
+        write_sentence(tracker, text)
+
+        dispatcher.utter_message(response='utter_help_msg')

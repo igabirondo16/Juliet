@@ -229,5 +229,15 @@ nlu:
     - [Hirugarrena]{"entity":"article_index", "value":"2"}
     - [3]{"entity":"article_index", "value":"2"} 
 
+- intent: ask_for_help
+  examples: |
+   - Laguntza
+   - Laguntza behar dut
+   - Laguntza eskatu nahi dut
+   - Help
+   - Ayuda
+   - Laguntza ondo etorriko litzaidake
+   
+
 
 
