@@ -1,3 +1,4 @@
+rasa
 whoosh==2.7.4
 ixapipes==0.0.6
 schedule==1.1.0

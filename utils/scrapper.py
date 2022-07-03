@@ -73,6 +73,7 @@ def get_file_url(option):
         return None
 
 def preprocess_header(header):
+    header = header.lower()
     tokens = tokenizer(header)
     lemmas = lemmatizer(tokens)
     print(lemmas)
@@ -245,8 +246,9 @@ def filter_user_query(naf_text):
     final_terms = ""
     for term in terms:
         pos = term['morphofeat']
+        starts_with = pos.startswith("IZE") or pos.startswith("ITJ") or pos.startswith("ADJ")
 
-        if pos.startswith("IZE") and term['lemma'] not in forbidden_tokens:
+        if starts_with and term['lemma'] not in forbidden_tokens:
             final_terms += " " + term['lemma']
 
     return final_terms

@@ -17,6 +17,7 @@ class QuerySearcher:
 
     def __search(self, category, query):
         # Open the index of the category
+        print("Query: " + str(query))
         ix = index.open_dir('index', indexname=category)
 
         qp = QueryParser('header', schema = ix.schema, group=qparser.OrGroup)
@@ -52,8 +53,7 @@ class QuerySearcher:
     
 
     def __preprocess_user_query(self, header):
-        header = header.replace('"', '')
-
+        header = header.lower()
         if self.tokenizer == None:    
             self.tokenizer = IxaPipesTokenizer('eu')
 
@@ -67,8 +67,8 @@ class QuerySearcher:
 
 
     def search_article(self, category_name, article_header):
-        article_header = self.__preprocess_user_query(article_header)
-        article_content = self.__search(category_name, article_header)
+        user_query = self.__preprocess_user_query(article_header)
+        article_content = self.__search(category_name, user_query)
 
         return article_content
 

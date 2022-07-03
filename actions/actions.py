@@ -12,6 +12,8 @@ from rasa_sdk.events import SlotSet
 from utils.ArticlesKeeper import ArticlesKeeper
 from exceptions.exceptions import NoFoundArticles
 
+MAX_MSG_LENGTH = 3500
+MAX_TOKENS = 35
 
 categories = ["Azken berriak", "Berri irakurrienak", "Gizartea", "Politika", "Ekonomia", "Mundua", "Iritzia", "Kultura", "Kirola", "Bizigiro"]
 
@@ -149,12 +151,11 @@ class ActionReturnArticleContent(Action):
 
             content, url = ak.get_article_content(article_index)
 
-            if len(content) > 3500:
+            if len(content) > MAX_MSG_LENGTH:
                 content_tokens = content.split()
-                num_tokens = 35
                 content = ""
 
-                for i in range(num_tokens):
+                for i in range(MAX_TOKENS):
                     content += content_tokens[i] + " "
 
                 content += " ..."

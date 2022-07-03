@@ -5,6 +5,7 @@ intents:
   - goodbye
   - choose_article_index
   - choose_category
+  - ask_for_help
 
 
 entities:
@@ -40,9 +41,9 @@ responses:
   - text: "Kaixo! Ni Juliet chatbot-a naiz."
 
   utter_explain:
-  - text: "Berria egunkariko artikuluak modu errazago batean bilatzeko programatu naute. Bilaketak egiteko, \"hitz_gakoak albisteak\" moduko formatua erabili, mesedez. Adibidez: \"Futboleko albisteak\"."
-  - text: "Berria egunkariko notiziak bilatu eta emateko gai naiz. Zerbait jakin nahi baldin baduzu, \"hitz_gakoak notiziak\" moduan bilatu dezakezu. Adibidez: \"Finlandia eta Suedia albisteak\"."
-  - text: "Berria egunkaritik berriak hartu eta zuri kontatzeko sortu naute. Zerbait bilatzeko: \"hitz_gakoak berriak\" formatu erabili. Adibidez: \"Eurovision berriak\"."
+  - text: "Berria egunkariko artikuluak modu errazago batean bilatzeko programatu naute. Bilaketak egiteko, \"hitz_gakoak albisteak\" moduko formatua erabili, mesedez. Adibidez: \"Futboleko albisteak\". \n Zalantzak badituzu, \"laguntza\" idatzi."
+  - text: "Berria egunkariko notiziak bilatu eta emateko gai naiz. Zerbait jakin nahi baldin baduzu, \"hitz_gakoak notiziak\" moduan bilatu dezakezu. Adibidez: \"Finlandia eta Suedia albisteak\". \n Zalantzak badituzu, \"laguntza\" idatzi."
+  - text: "Berria egunkaritik berriak hartu eta zuri kontatzeko sortu naute. Zerbait bilatzeko: \"hitz_gakoak berriak\" formatu erabili. Adibidez: \"Eurovision berriak\".\n Zalantzak badituzu, \"laguntza\" idatzi."
 
   utter_error_msg:
   - text: "Barkatu, ez zaitut ulertu. Berriz errepikatuko?"
@@ -75,7 +76,7 @@ responses:
   - text: "Nire egileak hanka sartu du programazioan. Egindako eskaera beste modu batera probatu."
 
   utter_help_msg:
-  - text: "Laguntza mezua: \n Albisteak edo kategoriak bilatzeko ondorengo formatuak onartzen dira: \n - \"Hitz_gakoak albisteak\"\n - \"Hitz_gakoak berriak\"\n - \"Hitz_gakoak notiziak\"\n\n Behin notiziak aurkitutakoan horrela aukeratu daitezke: \n - Lehenengo, bigarrena edo hirugarrena. \n - Bat, bi edo hiru. \n - 1, 2 edo 3. \n - Botoiak erabiliz."
+  - text: "Albisteak edo kategoriak bilatzeko ondorengo formatuak onartzen dira: \n - \"Hitz_gakoak albisteak\"\n - \"Hitz_gakoak berriak\"\n - \"Hitz_gakoak notiziak\"\n\n Behin notiziak aurkitutakoan horrela aukeratu daitezke: \n - Lehenengo, bigarrena edo hirugarrena. \n - Bat, bi edo hiru. \n - 1, 2 edo 3. \n - Botoiak erabiliz."
 
 actions:
   - action_initialize_article_keeper

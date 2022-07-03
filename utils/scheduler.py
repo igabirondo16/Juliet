@@ -62,8 +62,8 @@ def update_index_articles():
             content = article['content']
             url = article['url']
 
-            article['header'] = header
-            article['original_header'] = original_header
+            #article['header'] = header
+            #article['original_header'] = original_header
             
             writer.add_document(header=header, original_header=original_header,content=content, url=url)           
 

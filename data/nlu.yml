@@ -9,6 +9,10 @@ nlu:
     - Lehenengoa
     - Lehenengo
     - Lehen
+    - bat
+    - lehenengoa
+    - lehenengo
+    - lehen
 
 - synonym: "1"
   examples: |
@@ -16,6 +20,9 @@ nlu:
     - Bi
     - Bigarrena
     - Bigarren
+    - bi
+    - bigarrena
+    - bigarren
 
 - synonym: "2"
   examples: |
@@ -23,6 +30,9 @@ nlu:
     - Hiru
     - Hirugarrena
     - Hirugarren
+    - hiru
+    - hirugarrena
+    - hirugarren
 
 - synonym: "Azken berriak"
   examples: |
@@ -30,6 +40,10 @@ nlu:
     - Azken berrien
     - Azken berria
     - Azkenak
+    - azken berriak
+    - azken berrien
+    - azken berria
+    - azkenak
   
 - synonym: "Berri irakurrienak"
   examples: |
@@ -37,6 +51,10 @@ nlu:
     - Berri irakurrienen
     - Irakurrienak
     - Berri irakurriena
+    - berri irakurrienak
+    - berri irakurrienen
+    - irakurrienak
+    - berri irakurriena
 
 - synonym: "Gizartea"
   examples: |
@@ -44,6 +62,10 @@ nlu:
     - Gizartearen
     - Gizarte
     - Gizartean
+    - gizarteko
+    - gizartearen
+    - gizarte
+    - gizartean
 
 - synonym: "Politika"
   examples: |
@@ -51,6 +73,10 @@ nlu:
     - Politikaren
     - Politikan
     - Politika
+    - politikako
+    - politikaren
+    - politikan
+    - politika
 
 - synonym: "Ekonomia"
   examples: |
@@ -58,6 +84,10 @@ nlu:
     - Ekonomiako
     - Ekonomian
     - Ekonomia
+    - ekonomiaren
+    - ekonomiako
+    - ekonomian
+    - ekonomia
 
 - synonym: "Mundua"
   examples: |
@@ -66,6 +96,11 @@ nlu:
     - Munduan
     - Mundu
     - Mundua
+    - munduko
+    - munduaren
+    - munduan
+    - mundu
+    - mundua
 
 - synonym: "Iritzia"
   examples: |
@@ -74,6 +109,11 @@ nlu:
     - Iritzian
     - Iritzi
     - Iritzia
+    - iritziaren
+    - iritziko
+    - iritzian
+    - iritzi
+    - iritzia
 
 - synonym: "Kultura"
   examples: |
@@ -82,6 +122,11 @@ nlu:
     - Kulturan
     - Kultur
     - Kultura
+    - kulturaren
+    - kulturako
+    - kulturan
+    - kultur
+    - kultura
 
 - synonym: "Kirola"
   examples: |
@@ -93,6 +138,14 @@ nlu:
     - Kirola
     - Kirolen
     - Kirolak
+    - kirolaren
+    - kirolan
+    - kiroletako
+    - kirolako
+    - kirol
+    - kirola
+    - kirolen
+    - kirolak
 
 - synonym: "Bizigiro"
   examples: |
@@ -100,6 +153,10 @@ nlu:
     - Bizigiron
     - Bizigiroko
     - Bizigiro
+    - bizigiroren
+    - bizigiron
+    - bizigiroko
+    - bizigiro
 
 - lookup: category
   examples: |
